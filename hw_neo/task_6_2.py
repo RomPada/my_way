@@ -1,5 +1,5 @@
 
-path = r'D:\Projects\vscode-basics\learning_neoversity\hw_neo\task_6_2.txt'
+path = r'D:\Project\vscode-basics\learning_neoversity\hw_neo\task_6_2.txt'
 
 def get_cats_info(path):
     try:

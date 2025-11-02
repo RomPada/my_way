@@ -1,5 +1,5 @@
 
-path = r'D:\Projects\vscode-basics\learning_neoversity\hw_neo\task_6_1.txt'
+path = r'D:\Project\vscode-basics\learning_neoversity\hw_neo\task_6_1.txt'
 
 import re
 

@@ -4,7 +4,6 @@ for number in [1, 2, 3, 4, 5]:
     if number == 3:
         break
     print(number)
-
 print("Кінець") # 1 2 Кінець
 
 
@@ -13,11 +12,10 @@ for number in [1, 2, 3, 4, 5]:
     if number == 3:
         continue
     print(number)
-
 print("Кінець") # 1 2 4 5 Кінець
 
 
-
+#####
 x = 0
 while x < 5:
     x += 1
