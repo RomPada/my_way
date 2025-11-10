@@ -1,5 +1,19 @@
-some_str = 'Видавництво А-БА-БА-ГА-ЛА-МА-ГА'
+class Person:
+    def __init__(self, name: str, age: int, is_active: bool, is_admin: bool):
+        self.name = name
+        self.age = age
+        self._is_active = is_active
+        self.__is_admin = is_admin
 
-new_str = ''.join([x for x in some_str if x.isnumeric()])
-print(new_str)
+    def greeting(self):
+        return f"Hi {self.name}"
 
+    def is_active(self):
+        return self._is_active
+
+    def set_active(self, active: bool):
+        self._is_active = active
+
+p = Person("Boris", 34, True, True)
+print(p._Person__is_admin)
+print(p._Person__is_admin)
