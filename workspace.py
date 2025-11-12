@@ -15,5 +15,3 @@ class Person:
         self._is_active = active
 
 p = Person("Boris", 34, True, True)
-print(p._Person__is_admin)
-print(p._Person__is_admin)

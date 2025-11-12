@@ -1,0 +1,82 @@
+[
+    {
+        "date_joined": "05/05/1985, 18:55:11",
+        "email_address": "andrew07@example.org",
+        "last_name": "Hayes",
+        "name": "Thomas Garcia",
+        "phone_number": "8306128998",
+        "user_id": 260
+    },
+    {
+        "date_joined": "11/30/1999, 15:24:07",
+        "email_address": "rebecca25@example.com",
+        "last_name": "Spencer",
+        "name": "Sean Torres",
+        "phone_number": "685-877-6601x2510",
+        "user_id": 579
+    },
+    {
+        "date_joined": "05/18/1984, 23:46:09",
+        "email_address": "theresa74@example.org",
+        "last_name": "Baker",
+        "name": "Donna Hernandez",
+        "phone_number": "3122854273",
+        "user_id": 966
+    },
+    {
+        "date_joined": "02/19/1988, 19:43:23",
+        "email_address": "michelle86@example.org",
+        "last_name": "Peters",
+        "name": "Brooke Rivera",
+        "phone_number": "(906)363-8982x925",
+        "user_id": 374
+    },
+    {
+        "date_joined": "10/30/1993, 17:24:00",
+        "email_address": "stevenlucas@example.com",
+        "last_name": "Juarez",
+        "name": "Sharon Escobar",
+        "phone_number": "665-621-2125",
+        "user_id": 594
+    },
+    {
+        "date_joined": "08/10/1976, 02:25:07",
+        "email_address": "dyerjoel@example.org",
+        "last_name": "Everett",
+        "name": "Todd Simmons",
+        "phone_number": "001-615-339-2539x0033",
+        "user_id": 453
+    },
+    {
+        "date_joined": "08/17/2023, 14:25:43",
+        "email_address": "jessicarice@example.org",
+        "last_name": "Summers",
+        "name": "Diane Ramsey",
+        "phone_number": "(663)617-5429x2576",
+        "user_id": 63
+    },
+    {
+        "date_joined": "12/09/2003, 08:31:30",
+        "email_address": "qburns@example.org",
+        "last_name": "Floyd",
+        "name": "Michael Figueroa",
+        "phone_number": "510.520.8367",
+        "user_id": 363
+    },
+    {
+        "date_joined": "10/06/1970, 21:11:32",
+        "email_address": "lauriecampos@example.net",
+        "last_name": "Bates",
+        "name": "Dustin Simmons",
+        "phone_number": "001-560-556-8419x9632",
+        "user_id": 281
+    },
+    {
+        "date_joined": "05/30/2019, 16:21:47",
+        "email_address": "hodgeschristopher@example.net",
+        "last_name": "Barber",
+        "name": "Shane Wyatt",
+        "phone_number": "001-923-574-6383x94163",
+        "user_id": 425
+    }
+]
