@@ -1,17 +1,17 @@
-class Person:
-    def __init__(self, name: str, age: int, is_active: bool, is_admin: bool):
-        self.name = name
-        self.age = age
-        self._is_active = is_active
-        self.__is_admin = is_admin
 
-    def greeting(self):
-        return f"Hi {self.name}"
+def dot_product(v1, v2):
+    return sum(x*y for x, y in zip(v1, v2))
 
-    def is_active(self):
-        return self._is_active
+def get_orthogonal_pairs(vectors):
+    n = len(vectors)
+    orthogonal_pairs = []
 
-    def set_active(self, active: bool):
-        self._is_active = active
+    for i in range(n):
+        for j in range(i+1, n):
+            if dot_product(vectors[i], vectors[j]) == 0:
+                orthogonal_pairs.append((i, j))
 
-p = Person("Boris", 34, True, True)
+    return orthogonal_pairs
+
+vectors = [[1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 1, 1]]
+print(get_orthogonal_pairs(vectors))
