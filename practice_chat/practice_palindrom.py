@@ -1,9 +1,9 @@
 
 def palindrom(word):
     if word == word[::-1]:
-        print('+')
+        return True
     else:
-        print('-')
+        return False
 
-palindrom('ama')
-palindrom('amnyya')
+print(palindrom('level'))
+print(palindrom('palindrome'))
