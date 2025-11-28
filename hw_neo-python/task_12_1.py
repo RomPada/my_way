@@ -2,7 +2,6 @@ import functools
 from collections import UserDict
 from datetime import datetime, timedelta
 
-import pickle
 
 def input_error(func):
     """
@@ -133,33 +132,6 @@ class AddressBook(UserDict):
         return upcoming_birthdays
 
 
-# >>> ДОДАНО: функції збереження/завантаження адресної книги з файлу
-def save_data(book: AddressBook, filename: str = "addressbook.pkl"):
-    """
-    Зберігає об'єкт AddressBook у файл за допомогою pickle.
-    """
-    with open(filename, "wb") as f:
-        pickle.dump(book, f)
-
-
-def load_data(filename: str = "addressbook.pkl") -> AddressBook:
-    """
-    Завантажує AddressBook з файлу.
-    Якщо файл не знайдено або пошкоджений — повертає порожню AddressBook.
-    """
-    try:
-        with open(filename, "rb") as f:
-            return pickle.load(f)
-    except FileNotFoundError:
-        # Файл ще не створювали — повертаємо нову книгу
-        return AddressBook()
-    except Exception as e:
-        # На випадок пошкодженого файлу — не ламаємо бота
-        print(f"Failed to load address book: {e}")
-        return AddressBook()
-# <<< КІНЕЦЬ ДОДАНИХ ФУНКЦІЙ
-
-
 def parse_input(user_input):
     """
     Розбирає введений рядок на команду та аргументи.
@@ -270,6 +242,7 @@ def birthdays(book: AddressBook):
 
 
 def main():
+    book = AddressBook()
     book = load_data()
 
     print("Welcome to the assistant bot!")
