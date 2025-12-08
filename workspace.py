@@ -1,29 +1,20 @@
-from queue import Queue
-import random
-import time
+from pathlib import Path
+import shutil
 
-queue = Queue()
+def sort_files_by_extension(dir_path):
+    root = Path(dir_path)
 
-def generate_request():
-    request_id = random.randint(1000, 9999)
-    queue.put(request_id)
-    print(f"Створено заявку з ID: {request_id}")
+    for item in root.rglob("*"):
+        if item.is_file():
+            ext = item.suffix.lstrip(".")
+            folder = root / ext
+            folder.mkdir(exist_ok=True)
+            destination = folder / item.name
+           
+            if item.resolve() == destination.resolve():
+                continue
 
-def process_request():
-    if not queue.empty():
-        request_id = queue.get()
-        print(f"Оброблено заявку з ID: {request_id}")
-    else:
-        print("Черга порожня.")
+            shutil.copy(item, destination)
+            print("Створено папку:", folder)
 
-def main(): 
-    try:
-        while True:
-            time.sleep(random.uniform(0.7, 1.5))
-            generate_request()
-            process_request()
-    except KeyboardInterrupt:
-        print("\nЗупинка обробки заявок...")
-
-if __name__ == "__main__":
-    main()
+sort_files_by_extension("D://Відрядження ОКП")

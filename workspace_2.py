@@ -1,41 +1,62 @@
-from queue import Queue
-import random
-import time
-import threading
+import argparse
+from pathlib import Path
+import shutil
+import sys
 
-queue = Queue()
 
-def generate_request():
-    while True:  # змінено: виніс безкінечний цикл у сам потік генерації
-        wait_time = random.uniform(0.5, 1.0)
-        time.sleep(wait_time)
-        request_id = random.randint(1000, 9999)
-        queue.put(request_id)
-        print(f"Створено заявку з ID: {request_id}")
+def copy_and_sort_files(src_dir: Path, dst_dir: Path) -> None:
+    """
+    Рекурсивно проходить по всіх файлах у src_dir
+    та копіює їх у dst_dir, розкладаючи по підпапках за розширенням.
+    """
+    for item in src_dir.iterdir():
+        try:
+            # Якщо це папка — заходимо в неї рекурсивно
+            if item.is_dir():
+                # Захист від зациклення, якщо dst_dir всередині src_dir
+                if item.resolve() == dst_dir.resolve():
+                    continue
+                copy_and_sort_files(item, dst_dir)
 
-def process_request():
-    while True:  # змінено: виніс безкінечний цикл у потік обробки
-        wait_time = random.uniform(0.5, 0.8)
-        time.sleep(wait_time)
-        if not queue.empty():
-            request_id = queue.get()
-            print(f"Оброблено заявку з ID: {request_id}")
-        else:
-            print("Черга порожня.")
+            # Якщо це файл — копіюємо
+            elif item.is_file():
+                # Беремо розширення без крапки, у нижньому регістрі
+                ext = item.suffix.lower().lstrip(".")
 
-def main(): 
-    # створюємо потоки ОДИН раз і запускаємо їх
-    t1 = threading.Thread(target=generate_request, daemon=True)  # змінено: створюємо потік генерації + daemon=True
-    t2 = threading.Thread(target=process_request, daemon=True)  # змінено: створюємо потік обробки + daemon=True
+                # Якщо розширення немає — кладемо в спеціальну папку
+                if not ext:
+                    ext = "no_extension"
 
-    t1.start()  # змінено: запускаємо потік генерації поза циклом
-    t2.start()  # змінено: запускаємо потік обробки поза циклом
+                # Папка призначення для цього типу файлів
+                ext_folder = dst_dir / ext
+                ext_folder.mkdir(parents=True, exist_ok=True)
 
-    try:
-        while True:
-            time.sleep(0.1)  # змінено: головний потік просто "живе", щоб програма не завершувалась
-    except KeyboardInterrupt:
-        print("\nЗупинка обробки заявок...")
+                destination = ext_folder / item.name
 
-if __name__ == "__main__":
-    main()
+                # Копіюємо файл з метаданими (час зміни, права і т.д.)
+                shutil.copy2(item, destination)
+
+                print(f"Скопійовано: {item} -> {destination}")
+
+        except PermissionError as e:
+            print(f"Немає доступу до: {item}. Помилка: {e}")
+        except OSError as e:
+            print(f"Помилка при обробці: {item}. Помилка: {e}")
+
+
+def main(src, dst="dist"):
+    src_dir = Path(src).resolve()
+    dst_dir = Path(dst).resolve()
+    
+    if not src_dir.exists():
+        print("Помилка: вихідна директорія не існує")
+        return
+
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    copy_and_sort_files(src_dir, dst_dir)
+
+    print("Готово!")
+
+
+
+main("D://Відрядження ОКП", "D://Відрядження ОКП//sorted_files")
