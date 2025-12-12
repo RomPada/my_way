@@ -1,62 +1,33 @@
-import argparse
-from pathlib import Path
-import shutil
+#  Програма візуалізує фрактал «сніжинка Коха». Користувач має можливість вказати рівень рекурсії.
+
+import turtle
+import math
 import sys
+from pathlib import Path
 
 
-def copy_and_sort_files(src_dir: Path, dst_dir: Path) -> None:
-    """
-    Рекурсивно проходить по всіх файлах у src_dir
-    та копіює їх у dst_dir, розкладаючи по підпапках за розширенням.
-    """
-    for item in src_dir.iterdir():
-        try:
-            # Якщо це папка — заходимо в неї рекурсивно
-            if item.is_dir():
-                # Захист від зациклення, якщо dst_dir всередині src_dir
-                if item.resolve() == dst_dir.resolve():
-                    continue
-                copy_and_sort_files(item, dst_dir)
+def koch_snowflake(t, order, size):
+    if order == 0:
+        t.forward(size)
+    else:
+        for angle in [60, -120, 60, 0]:
+            koch_snowflake(t, order - 1, size / 3)
+            t.left(angle)
 
-            # Якщо це файл — копіюємо
-            elif item.is_file():
-                # Беремо розширення без крапки, у нижньому регістрі
-                ext = item.suffix.lower().lstrip(".")
+def main():
+    level = int(input("Введіть рівень рекурсії (наприклад, 3): "))
+    size = 300  # Довжина сторони сніжинки
 
-                # Якщо розширення немає — кладемо в спеціальну папку
-                if not ext:
-                    ext = "no_extension"
+    window = turtle.Screen()
+    window.title("Сніжинка Коха")
+    t = turtle.Turtle()
+    t.speed(0)  # Максимальна швидкість
 
-                # Папка призначення для цього типу файлів
-                ext_folder = dst_dir / ext
-                ext_folder.mkdir(parents=True, exist_ok=True)
+    for _ in range(3):
+        koch_snowflake(t, level, size)
+        t.right(120)
 
-                destination = ext_folder / item.name
+    turtle.done()
 
-                # Копіюємо файл з метаданими (час зміни, права і т.д.)
-                shutil.copy2(item, destination)
-
-                print(f"Скопійовано: {item} -> {destination}")
-
-        except PermissionError as e:
-            print(f"Немає доступу до: {item}. Помилка: {e}")
-        except OSError as e:
-            print(f"Помилка при обробці: {item}. Помилка: {e}")
-
-
-def main(src, dst="dist"):
-    src_dir = Path(src).resolve()
-    dst_dir = Path(dst).resolve()
-    
-    if not src_dir.exists():
-        print("Помилка: вихідна директорія не існує")
-        return
-
-    dst_dir.mkdir(parents=True, exist_ok=True)
-    copy_and_sort_files(src_dir, dst_dir)
-
-    print("Готово!")
-
-
-
-main("D://Відрядження ОКП", "D://Відрядження ОКП//sorted_files")
+if __name__ == "__main__":
+    main()
