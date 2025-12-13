@@ -97,8 +97,8 @@ def read_file(path: Path) -> str:
     with path.open(encoding="utf-8", errors="ignore") as f:
         return f.read()
 
-data_path = read_file(BASE_DIR / "стаття 1.txt")
-data_path_2 = read_file(BASE_DIR / "стаття 2 (1).txt")  
+data_path = read_file(BASE_DIR / "topic_5_3.стаття 1.txt")
+data_path_2 = read_file(BASE_DIR / "topic_5_3.стаття 2 (1).txt")  
 
 pattern = "алгоритм"
 pattern_2 = "знайди щось, що не існує"
