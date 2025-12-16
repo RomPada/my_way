@@ -1,6 +1,27 @@
-arr = [1, 3, 5, 7, 9, 11, 14, 16, 18, 20, 22, 25, 28, 30]
-key = 25
-low = 0 
-high = len(arr) - 1 # 13
-index = int(low + ((key - arr[low]) / (arr[high] - arr[low])) * (high - low)) # 10
-print(index)
+import heapq
+
+def min_connection_cost(cables):
+    heap = cables[:]          # копія списку
+    heapq.heapify(heap)       # перетворюємо у мін-купу
+
+    total = 0
+    steps = []                # щоб бачити порядок (не обов'язково)
+
+    while len(heap) > 1:
+        a = heapq.heappop(heap)
+        b = heapq.heappop(heap)
+        cost = a + b
+        total += cost
+        steps.append((a, b, cost))
+        heapq.heappush(heap, cost)
+
+    return total, steps
+
+# приклад
+cables = [5, 6, 7, 11, 12, 13]
+total, steps = min_connection_cost(cables)
+
+print("Загальні витрати:", total)
+print("Кроки:")
+for a, b, cost in steps:
+    print(f"{a} + {b} = {cost}")
