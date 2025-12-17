@@ -1,27 +1,68 @@
 import heapq
+from math import inf
 
-def min_connection_cost(cables):
-    heap = cables[:]          # копія списку
-    heapq.heapify(heap)       # перетворюємо у мін-купу
+def dijkstra_heap(graph, start):
+    """
+    graph: dict[str, list[tuple[str, int|float]]]
+        Приклад: {"A": [("B", 5), ("C", 2)], ...}
+    start: вершина-джерело
 
-    total = 0
-    steps = []                # щоб бачити порядок (не обов'язково)
+    Повертає:
+      dist  - найкоротші відстані до всіх вершин
+      prev  - попередники для відновлення шляху
+    """
+    dist = {v: inf for v in graph}
+    prev = {v: None for v in graph}
+    dist[start] = 0
 
-    while len(heap) > 1:
-        a = heapq.heappop(heap)
-        b = heapq.heappop(heap)
-        cost = a + b
-        total += cost
-        steps.append((a, b, cost))
-        heapq.heappush(heap, cost)
+    # (поточна_відстань, вершина)
+    heap = [(0, start)]
 
-    return total, steps
+    while heap:
+        cur_dist, u = heapq.heappop(heap)
 
-# приклад
-cables = [5, 6, 7, 11, 12, 13]
-total, steps = min_connection_cost(cables)
+        # Якщо це "старий" запис (ми вже знайшли кращий шлях) — пропускаємо
+        if cur_dist != dist[u]:
+            continue
 
-print("Загальні витрати:", total)
-print("Кроки:")
-for a, b, cost in steps:
-    print(f"{a} + {b} = {cost}")
+        # "Релаксація" ребер: пробуємо покращити сусідів
+        for v, w in graph[u]:
+            if w < 0:
+                raise ValueError("Дейкстра не працює з від'ємними вагами ребер")
+
+            new_dist = cur_dist + w
+            if new_dist < dist[v]:
+                dist[v] = new_dist
+                prev[v] = u
+                heapq.heappush(heap, (new_dist, v))
+
+    return dist, prev
+
+
+def reconstruct_path(prev, start, target):
+    """Відновлює шлях start -> target по словнику prev."""
+    path = []
+    cur = target
+    while cur is not None:
+        path.append(cur)
+        cur = prev[cur]
+    path.reverse()
+
+    if path and path[0] == start:
+        return path
+    return []  # якщо шлях не існує
+
+
+# --- Приклад графа (орієнтований). Для неорієнтованого додавайте ребра в обидва боки.
+graph = {
+    "A": [("B", 4), ("C", 2)],
+    "B": [("C", 1), ("D", 5)],
+    "C": [("B", 1), ("D", 8), ("E", 10)],
+    "D": [("E", 2)],
+    "E": []
+}
+
+dist, prev = dijkstra_heap(graph, "A")
+
+print("Відстані:", dist)
+print("Шлях A -> E:", reconstruct_path(prev, "A", "E"))
