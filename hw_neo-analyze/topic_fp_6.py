@@ -68,7 +68,7 @@ def dynamic_programming(items: dict, budget: int):
 # Ввід бюджету користувачем
 while True:
     try:
-        budget = int(input("Введіть ваш бюджет: "))
+        budget = int(input("Введіть ваш бюджет (наприклад 100): "))
         if budget <= 0:
             print("Бюджет має бути додатнім числом.")
             continue

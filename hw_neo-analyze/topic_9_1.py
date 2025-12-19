@@ -9,7 +9,7 @@ def find_coins_greedy(amount):
         if amount >= coin:
             count = amount // coin
             result[coin] = count
-            amount -= coin * coun
+            amount -= coin * count
 
     return result
 
@@ -53,8 +53,8 @@ while True:
 coins = [50, 25, 10, 5, 2, 1]
 
 
-print("Greedy approach:", find_coins_greedy(value))
-print("Greedy approach time:", timeit.timeit(lambda: find_coins_greedy(value), number=1000))
-print("Dynamic programming approach:", find_min_coins(value))
-print("Dynamic programming approach time:", timeit.timeit(lambda: find_min_coins(value), number=1000))
+print("Greedy approach:", find_coins_greedy(amount))
+print("Greedy approach time:", timeit.timeit(lambda: find_coins_greedy(amount), number=1000))
+print("Dynamic programming approach:", find_min_coins(amount))
+print("Dynamic programming approach time:", timeit.timeit(lambda: find_min_coins(amount), number=1000))
 
