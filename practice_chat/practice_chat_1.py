@@ -1,4 +1,4 @@
-
+    
 numeric1 = int(input("Input first number: "))
 numeric2 = int(input("Input first number: "))
 
